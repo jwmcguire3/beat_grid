@@ -1,0 +1,6 @@
+# Default runtime settings for Workflow 01 audio prep.
+# TODO: expand with chunking, model backend settings, and per-stage thresholds.
+sample_rate_hz: 44100
+hop_length: 512
+enable_stem_separation: true
+enable_micro_events: true

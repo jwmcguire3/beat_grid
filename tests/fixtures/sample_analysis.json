@@ -1,0 +1,22 @@
+{
+  "song_metadata": {
+    "track_id": "sample-001",
+    "title": "sample",
+    "duration_seconds": "8.000",
+    "sample_rate_hz": 44100,
+    "bpm": 100.0,
+    "key": "C major"
+  },
+  "sections": [
+    {"label": "intro", "start_seconds": "0.000", "end_seconds": "8.000", "confidence": 0.9}
+  ],
+  "beat_grid": [
+    {"time_seconds": "0.000", "beat_number": 1, "bar_number": 1}
+  ],
+  "micro_events": [
+    {"event_type": "kick_hit", "time_seconds": "0.500", "significance": "high", "confidence": 0.7}
+  ],
+  "energy_curve": [
+    {"time_seconds": "0.000", "energy": 0.2}
+  ]
+}

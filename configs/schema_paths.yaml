@@ -1,0 +1,2 @@
+# Schema locations used by validation hooks.
+audio_prep_output_schema: schemas/beat_grid_microtiming.schema.json
