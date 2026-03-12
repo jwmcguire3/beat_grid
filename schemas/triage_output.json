@@ -1,0 +1,69 @@
+
+{
+  "review_metadata": {
+    "song_title": "string",
+    "review_date": "string — ISO 8601 date",
+    "total_clips_reviewed": "integer",
+    "total_approved": "integer",
+    "total_regenerate": "integer",
+    "total_upstream_fix": "integer",
+    "review_pass": "integer — which review cycle this is (1 = first pass, 2 = after first regeneration, etc.)"
+  },
+
+  "clips": [
+    {
+      "shot_id": "string — references shot board, e.g. 'S014'",
+      "attempt": "integer — generation attempt number, starting from 1",
+      "file_path": "string — path to the clip file",
+      "model_used": "string — which model generated this, e.g. 'kling_3.0'",
+      "prompt_used": "string | null — the exact prompt, for reproducibility",
+
+      "scores": {
+        "motion_quality": "integer 1-5 — smoothness, naturalness, no jitter or warping",
+        "character_fidelity": "integer 1-5 — how well the character matches reference images",
+        "prompt_adherence": "integer 1-5 — did the clip do what was specified in the shot board",
+        "technical_quality": "integer 1-5 — resolution, sharpness, absence of artifacts",
+        "transition_readiness": "integer 1-5 — does the clip start/end in usable states for adjacent shots",
+        "emotional_fit": "integer 1-5 — does the energy and mood match this moment in the song",
+        "composite_score": "number — average of all scores, calculated not manually entered"
+      },
+
+      "disposition": "string — from: approved | regenerate | upstream_fix | cut",
+
+      "approved_details": {
+        "needs_color_correction": "boolean",
+        "needs_stabilization": "boolean",
+        "needs_upscaling": "boolean",
+        "trim_start_seconds": "number | null — if the clip needs trimming from the start",
+        "trim_end_seconds": "number | null — if the clip needs trimming from the end",
+        "notes": "string | null"
+      },
+
+      "regeneration_details": {
+        "failure_reason": "string — from: character_drift | motion_artifact | wrong_composition | wrong_action | lighting_mismatch | environment_mismatch | lip_sync_fail | morph_distortion | low_energy | prompt_ignored | technical_defect | other",
+        "suggested_changes": "string — specific guidance for next attempt, e.g. 'simplify camera movement to static, character drifts during pan'",
+        "try_different_model": "boolean",
+        "suggested_model": "string | null — if try_different_model is true",
+        "priority": "string — from: critical (hero shot, must regenerate) | high (important shot, should regenerate) | medium (would improve video) | low (could cut or replace with alternative)"
+      },
+
+      "upstream_fix_details": {
+        "target_workflow": "string — which upstream workflow needs correction, e.g. 'reference_assets', 'continuity_package', 'shot_board', 'prompt_translation'",
+        "issue_description": "string — what's wrong upstream, e.g. 'character reference hair color reads as black in side lighting, causes drift in all stage_dark shots'",
+        "affected_shots": ["string — all shot IDs affected by this upstream issue, e.g. ['S003', 'S007', 'S014', 'S022']"]
+      }
+    }
+  ],
+
+  "pattern_diagnosis": [
+    {
+      "pattern_id": "string — e.g. 'P001'",
+      "description": "string — e.g. 'All medium close-up shots in stage_dark environment show character hair color shifting from brown to black'",
+      "affected_shots": ["string — shot IDs"],
+      "likely_cause": "string — e.g. 'Character reference image has ambiguous hair color under dark lighting. Reference was generated under neutral lighting but all stage shots use warm directional light.'",
+      "recommended_fix": "string — e.g. 'Generate additional character reference under warm side-lighting matching stage_dark lighting rules. Update continuity package to include lighting-specific character variant.'",
+      "target_workflow": "string — which workflow to fix",
+      "severity": "string — from: blocking (cannot finish video without fixing) | degrading (video quality noticeably lower) | minor (cosmetic, could ship as-is)"
+    }
+  ]
+}

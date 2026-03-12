@@ -1,0 +1,70 @@
+
+{
+  "project_metadata": {
+    "song_title": "string",
+    "visual_style_summary": "string — one paragraph describing the overall visual identity",
+    "color_palette": ["string — specific color descriptions, e.g. 'deep teal (#2A6B6B)', 'burnt orange (#CC5500)', 'charcoal black (#1A1A1A)'"]
+  },
+
+  "characters": [
+    {
+      "label": "string — short identifier used in shot board, e.g. 'singer_main'",
+      "role": "string — narrative role, e.g. 'primary performer', 'love interest', 'symbolic figure'",
+      "prompt_fragment": "string — the exact injectable description. Example: 'woman, early 30s, dark brown shoulder-length wavy hair, angular jawline, light brown skin, fitted black turtleneck, dark indigo jeans, minimal silver necklace, intense focused expression'",
+      "negative_prompt_fragment": "string — what to exclude for this character. Example: 'no glasses, no hat, no tattoos, no bright colors in clothing, no smiling'",
+      "wardrobe_variants": [
+        {
+          "variant_label": "string — e.g. 'singer_main_alt1'",
+          "context": "string — when this variant is used, e.g. 'chorus and bridge sections — outdoor rooftop'",
+          "prompt_fragment": "string — the variant description. Example: 'same woman, dark brown shoulder-length wavy hair, angular jawline, light brown skin, loose white linen shirt untucked, same dark indigo jeans, wind-blown hair, relaxed expression'",
+          "negative_prompt_fragment": "string"
+        }
+      ],
+      "acceptable_variation": {
+        "hair": "string — e.g. 'minor variation in wave pattern acceptable, length and color must be consistent'",
+        "face": "string — e.g. 'jawline shape and skin tone must match, minor expression changes expected'",
+        "clothing": "string — e.g. 'exact garments must match within a wardrobe variant, minor wrinkle/fold variation acceptable'",
+        "overall": "string — e.g. 'must be recognizable as the same person across all shots. 80%+ facial similarity to reference image required.'"
+      },
+      "reference_images": ["string — file paths to committed reference images, e.g. 'refs/singer_main_front_v2.png'"]
+    }
+  ],
+
+  "locations": [
+    {
+      "label": "string — short identifier used in shot board, e.g. 'stage_dark'",
+      "prompt_fragment": "string — the exact injectable description. Example: 'dark empty stage, single overhead spotlight creating a harsh pool of light center stage, black void background, scuffed wooden floor, faint dust particles in the light beam, no audience visible'",
+      "negative_prompt_fragment": "string — e.g. 'no crowd, no daylight, no colorful lighting, no visible walls or ceiling'",
+      "lighting_rules": {
+        "key_light": "string — e.g. 'single hard overhead spot, warm white (3200K)'",
+        "fill": "string — e.g. 'minimal — deep shadows, near-silhouette on shadow side'",
+        "color_temperature": "string — e.g. 'warm 3200K key, no color gels'",
+        "time_of_day": "string | null — e.g. 'n/a (interior)' or 'golden hour'"
+      },
+      "acceptable_variation": {
+        "spatial": "string — e.g. 'stage dimensions can vary, floor texture can vary, the key constraint is the single spotlight in darkness'",
+        "lighting": "string — e.g. 'spotlight intensity can vary slightly, must remain single-source harsh lighting'"
+      },
+      "reference_images": ["string — file paths"]
+    }
+  ],
+
+  "props": [
+    {
+      "label": "string — e.g. 'vintage_microphone'",
+      "prompt_fragment": "string — e.g. 'vintage silver ribbon microphone on a straight black stand, slightly worn metallic finish'",
+      "appears_in_shots": ["string — shot IDs or section labels where this prop is present"],
+      "reference_images": ["string — file paths, if any"]
+    }
+  ],
+
+  "camera_style": {
+    "default_lens_tendency": "string — e.g. '35mm-50mm equivalent, shallow depth of field on close-ups, deeper on wides'",
+    "default_movement_quality": "string — e.g. 'smooth and deliberate, no handheld shake except in breakdown section'",
+    "prompt_fragment": "string — injectable camera style note. Example: 'cinematic shallow depth of field, film grain, 35mm lens feel, smooth controlled camera movement'"
+  },
+
+  "global_negative_prompts": "string — negative constraints that apply to ALL shots. Example: 'no text, no watermark, no logos, no borders, no split screen, no cartoon style, no anime, no oversaturated colors, no lens flare, no Dutch angle unless specified'",
+
+  "do_not_show": ["string — specific items/concepts that must never appear. Example: 'blood', 'weapons', 'children', 'brand logos', 'modern smartphones'"]
+}

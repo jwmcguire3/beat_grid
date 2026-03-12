@@ -1,0 +1,55 @@
+
+{
+  "song_metadata": {
+    "title": "string — song title",
+    "duration_seconds": "number — total duration, e.g. 214.500",
+    "bpm": "number — beats per minute, e.g. 128.0",
+    "key": "string — musical key, e.g. 'Cm' or 'F#maj'",
+    "time_signature": "string — e.g. '4/4', '3/4', '6/8'"
+  },
+
+  "stems": {
+    "vocals": "string — relative file path, e.g. 'stems/vocals.wav'",
+    "drums": "string — relative file path",
+    "bass": "string — relative file path",
+    "melody": "string — relative file path",
+    "other": "string — relative file path",
+    "master": "string — relative file path to original mix"
+  },
+
+  "sections": [
+    {
+      "label": "string — from closed vocabulary: intro | verse | pre_chorus | chorus | post_chorus | bridge | breakdown | outro | instrumental | ad_lib",
+      "instance": "integer — which occurrence, e.g. 1 for first verse, 2 for second verse",
+      "start": "number — timestamp in seconds, e.g. 0.000",
+      "end": "number — timestamp in seconds, e.g. 14.250",
+      "energy_level": "number — normalized 0.0 to 1.0, average energy for this section"
+    }
+  ],
+
+  "beat_grid": [
+    {
+      "time": "number — timestamp in seconds",
+      "beat_number": "integer — beat within the measure, e.g. 1, 2, 3, 4",
+      "measure": "integer — which measure, starting from 1",
+      "strength": "string — from closed vocabulary: downbeat | strong | weak | off"
+    }
+  ],
+
+  "micro_events": [
+    {
+      "time": "number — timestamp in seconds",
+      "type": "string — from closed vocabulary: snare_hit | kick_hit | bass_drop | vocal_onset | vocal_offset | silence_start | silence_end | crash | fill_start | fill_end | chord_change | buildup_start | drop",
+      "section": "string — which section label this falls in",
+      "significance": "string — from closed vocabulary: high | medium | low",
+      "note": "string | null — optional freeform context, e.g. 'main vocal entry after intro'"
+    }
+  ],
+
+  "energy_curve": [
+    {
+      "time": "number — timestamp in seconds, sampled at regular intervals (e.g. every 0.5s)",
+      "energy": "number — normalized 0.0 to 1.0"
+    }
+  ]
+}

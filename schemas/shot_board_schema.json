@@ -1,0 +1,58 @@
+
+{
+  "project_metadata": {
+    "song_title": "string",
+    "total_shots": "integer",
+    "total_duration_seconds": "number",
+    "target_resolution": "string — e.g. '1920x1080', '3840x2160'",
+    "target_frame_rate": "integer — e.g. 24, 30",
+    "target_aspect_ratio": "string — e.g. '16:9', '9:16'"
+  },
+
+  "shots": [
+    {
+      "shot_id": "string — format S###, e.g. 'S001'",
+      "section": "string — section label from beat grid, e.g. 'verse_1'",
+      "timestamp_start": "number — seconds, beat-aligned",
+      "timestamp_end": "number — seconds, beat-aligned",
+      "duration": "number — seconds (end minus start)",
+
+      "shot_type": "string — from: extreme_wide | wide | medium_wide | medium | medium_close | close_up | extreme_close | insert | overhead | pov",
+      "camera_movement": "string — from: static | pan_left | pan_right | tilt_up | tilt_down | zoom_in | zoom_out | dolly_in | dolly_out | orbit_left | orbit_right | crane_up | crane_down | handheld | tracking",
+      "camera_speed": "string — from: slow | medium | fast",
+
+      "subject": "string — what/who is in frame, referencing continuity package labels, e.g. 'singer_main'",
+      "subject_action": "string — what the subject does, e.g. 'turns to face camera, singing'",
+      "environment": "string — referencing continuity package location labels, e.g. 'stage_dark'",
+      "lighting": "string — referencing continuity package lighting rules, e.g. 'amber_side_key'",
+      "active_motifs": ["string — motif names from motif extraction, e.g. 'empty_chair', 'spotlight'"],
+
+      "lip_sync": "boolean — whether this shot requires lip-sync generation",
+      "lip_sync_text": "string | null — the specific lyric being sung in this shot, if lip_sync is true",
+
+      "hero_shot": "boolean — whether this is a high-priority shot that gets maximum generation attempts",
+      "shot_purpose": "string — from: performance | narrative | symbolic | transition | establishing | reaction | filler",
+
+      "assigned_model": "string — the video generation model for this shot, e.g. 'kling_3.0', 'runway_gen4_turbo', 'veo_3.1', 'seedance_2.0'",
+      "generation_strategy": "string — from: image_to_video | text_to_video | multi_shot",
+      "max_single_generation": "number — max seconds this model can produce in one pass",
+      "requires_extension": "boolean — whether duration exceeds max_single_generation",
+
+      "transition_in": {
+        "type": "string — from: hard_cut | crossfade | dissolve | match_cut | whip_pan | color_shift | zoom_bridge | morph | fade_from_black | none",
+        "duration_seconds": "number — 0.0 for hard cuts",
+        "coordination_notes": "string | null — keyframe composition requirements for this transition, e.g. 'must match framing of S014 end frame'"
+      },
+      "transition_out": {
+        "type": "string — same vocabulary as transition_in type",
+        "duration_seconds": "number",
+        "coordination_notes": "string | null"
+      },
+
+      "end_state": "string — description of how this clip should end to support the next shot, e.g. 'camera arrives at wide shot, singer center frame, facing away'",
+
+      "notes": "string | null — any additional context for prompt translation or generation"
+    }
+  ]
+}
+`
