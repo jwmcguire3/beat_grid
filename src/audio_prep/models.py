@@ -3,9 +3,59 @@
 These are scaffold models and will evolve with schema alignment.
 """
 
-from pydantic import BaseModel, Field, field_validator
+from enum import Enum
 
-from audio_prep.constants import MICRO_EVENT_TYPES, SECTION_LABELS, SIGNIFICANCE_LEVELS
+from pydantic import BaseModel, Field
+
+
+class SectionLabel(str, Enum):
+    """Closed vocabulary for section labels."""
+
+    INTRO = "intro"
+    VERSE = "verse"
+    PRE_CHORUS = "pre_chorus"
+    CHORUS = "chorus"
+    POST_CHORUS = "post_chorus"
+    BRIDGE = "bridge"
+    BREAKDOWN = "breakdown"
+    OUTRO = "outro"
+    INSTRUMENTAL = "instrumental"
+    AD_LIB = "ad_lib"
+
+
+class BeatStrength(str, Enum):
+    """Closed vocabulary for beat strengths."""
+
+    DOWNBEAT = "downbeat"
+    STRONG = "strong"
+    WEAK = "weak"
+    OFF = "off"
+
+
+class MicroEventType(str, Enum):
+    """Closed vocabulary for micro event types."""
+
+    SNARE_HIT = "snare_hit"
+    KICK_HIT = "kick_hit"
+    BASS_DROP = "bass_drop"
+    VOCAL_ONSET = "vocal_onset"
+    VOCAL_OFFSET = "vocal_offset"
+    SILENCE_START = "silence_start"
+    SILENCE_END = "silence_end"
+    CRASH = "crash"
+    FILL_START = "fill_start"
+    FILL_END = "fill_end"
+    CHORD_CHANGE = "chord_change"
+    BUILDUP_START = "buildup_start"
+    DROP = "drop"
+
+
+class Significance(str, Enum):
+    """Closed vocabulary for event significance."""
+
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
 
 
 class SongMetadata(BaseModel):
@@ -22,17 +72,10 @@ class SongMetadata(BaseModel):
 class Section(BaseModel):
     """Song section interval."""
 
-    label: str
+    label: SectionLabel
     start_seconds: str
     end_seconds: str
     confidence: float = Field(ge=0.0, le=1.0)
-
-    @field_validator("label")
-    @classmethod
-    def validate_label(cls, value: str) -> str:
-        if value not in SECTION_LABELS:
-            raise ValueError(f"unsupported section label: {value}")
-        return value
 
 
 class BeatGridEntry(BaseModel):
@@ -41,29 +84,17 @@ class BeatGridEntry(BaseModel):
     time_seconds: str
     beat_number: int = Field(ge=1, le=4)
     bar_number: int = Field(ge=1)
+    strength: BeatStrength
 
 
 class MicroEvent(BaseModel):
     """Micro-timing or musically salient event."""
 
-    event_type: str
-    time_seconds: str
-    significance: str
-    confidence: float = Field(ge=0.0, le=1.0)
-
-    @field_validator("event_type")
-    @classmethod
-    def validate_event_type(cls, value: str) -> str:
-        if value not in MICRO_EVENT_TYPES:
-            raise ValueError(f"unsupported micro-event type: {value}")
-        return value
-
-    @field_validator("significance")
-    @classmethod
-    def validate_significance(cls, value: str) -> str:
-        if value not in SIGNIFICANCE_LEVELS:
-            raise ValueError(f"unsupported significance: {value}")
-        return value
+    time: str
+    type: MicroEventType
+    section: str
+    significance: Significance
+    note: str | None
 
 
 class EnergyPoint(BaseModel):

@@ -18,8 +18,8 @@ def _sample_payload() -> AudioPrepOutput:
             bpm=120.0,
         ),
         sections=[Section(label="intro", start_seconds="0.000", end_seconds="5.000", confidence=0.9)],
-        beat_grid=[BeatGridEntry(time_seconds="0.000", beat_number=1, bar_number=1)],
-        micro_events=[MicroEvent(event_type="kick_hit", time_seconds="1.000", significance="low", confidence=0.8)],
+        beat_grid=[BeatGridEntry(time_seconds="0.000", beat_number=1, bar_number=1, strength="downbeat")],
+        micro_events=[MicroEvent(time="1.000", type="kick_hit", section="intro", significance="low", note=None)],
         energy_curve=[EnergyPoint(time_seconds="0.000", energy=0.5)],
     )
 
