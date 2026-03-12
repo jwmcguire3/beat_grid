@@ -1,15 +1,254 @@
 {
+  "$id": "https://example.com/schemas/beat_grid_microtiming.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "beat_grid_microtiming.schema.json",
-  "title": "Beat Grid & Micro-Timing Output",
+  "title": "Workflow 01 Audio Preparation Output",
+  "description": "Strict root contract for audio preparation output consumed by downstream beat-grid workflows. Timestamps are numeric seconds; serialization to fixed 3 decimals is enforced by application code, not schema.",
   "type": "object",
-  "required": ["song_metadata", "sections", "beat_grid", "micro_events", "energy_curve"],
+  "additionalProperties": false,
+  "required": [
+    "song_metadata",
+    "stems",
+    "sections",
+    "beat_grid",
+    "micro_events",
+    "energy_curve"
+  ],
   "properties": {
-    "song_metadata": {"type": "object"},
-    "sections": {"type": "array", "items": {"type": "object"}},
-    "beat_grid": {"type": "array", "items": {"type": "object"}},
-    "micro_events": {"type": "array", "items": {"type": "object"}},
-    "energy_curve": {"type": "array", "items": {"type": "object"}}
+    "song_metadata": {
+      "type": "object",
+      "description": "Global song-level metadata extracted during preparation.",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "duration_seconds",
+        "bpm",
+        "key",
+        "time_signature"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Human-readable song title.",
+          "minLength": 1
+        },
+        "duration_seconds": {
+          "type": "number",
+          "description": "Track duration in seconds.",
+          "exclusiveMinimum": 0
+        },
+        "bpm": {
+          "type": "number",
+          "description": "Tempo in beats per minute.",
+          "exclusiveMinimum": 0
+        },
+        "key": {
+          "type": "string",
+          "description": "Musical key label.",
+          "minLength": 1
+        },
+        "time_signature": {
+          "type": "string",
+          "description": "Time signature, e.g. 4/4.",
+          "minLength": 1
+        }
+      }
+    },
+    "stems": {
+      "type": "object",
+      "description": "Relative filesystem paths for separated stems and master.",
+      "additionalProperties": false,
+      "required": [
+        "vocals",
+        "drums",
+        "bass",
+        "melody",
+        "other",
+        "master"
+      ],
+      "properties": {
+        "vocals": { "$ref": "#/$defs/relativePath" },
+        "drums": { "$ref": "#/$defs/relativePath" },
+        "bass": { "$ref": "#/$defs/relativePath" },
+        "melody": { "$ref": "#/$defs/relativePath" },
+        "other": { "$ref": "#/$defs/relativePath" },
+        "master": { "$ref": "#/$defs/relativePath" }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "description": "Ordered coarse song sections.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "instance",
+          "start",
+          "end",
+          "energy_level"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "enum": [
+              "intro",
+              "verse",
+              "pre_chorus",
+              "chorus",
+              "post_chorus",
+              "bridge",
+              "breakdown",
+              "outro",
+              "instrumental",
+              "ad_lib"
+            ]
+          },
+          "instance": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "start": {
+            "type": "number",
+            "minimum": 0
+          },
+          "end": {
+            "type": "number",
+            "minimum": 0
+          },
+          "energy_level": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "beat_grid": {
+      "type": "array",
+      "description": "Beat-aligned temporal grid.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "time",
+          "beat_number",
+          "measure",
+          "strength"
+        ],
+        "properties": {
+          "time": {
+            "type": "number",
+            "minimum": 0
+          },
+          "beat_number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "measure": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "strength": {
+            "type": "string",
+            "enum": [
+              "downbeat",
+              "strong",
+              "weak",
+              "off"
+            ]
+          }
+        }
+      }
+    },
+    "micro_events": {
+      "type": "array",
+      "description": "Fine-grained musical/structural timing events.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "time",
+          "type",
+          "section",
+          "significance",
+          "note"
+        ],
+        "properties": {
+          "time": {
+            "type": "number",
+            "minimum": 0
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "snare_hit",
+              "kick_hit",
+              "bass_drop",
+              "vocal_onset",
+              "vocal_offset",
+              "silence_start",
+              "silence_end",
+              "crash",
+              "fill_start",
+              "fill_end",
+              "chord_change",
+              "buildup_start",
+              "drop"
+            ]
+          },
+          "section": {
+            "type": "string",
+            "description": "Section identifier resolved at runtime; cross-reference validity is enforced in Python continuity checks.",
+            "minLength": 1
+          },
+          "significance": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "note": {
+            "description": "Optional freeform context.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "energy_curve": {
+      "type": "array",
+      "description": "Sampled energy trajectory over time.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "time",
+          "energy"
+        ],
+        "properties": {
+          "time": {
+            "type": "number",
+            "minimum": 0
+          },
+          "energy": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    }
   },
-  "additionalProperties": true
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "description": "Non-empty relative filesystem path (not absolute and not a URL).",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z][A-Za-z0-9+.-]*://)(?!/)(?!.*\\.\\.)\\S+$"
+    }
+  }
 }

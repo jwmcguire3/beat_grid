@@ -1,22 +1,107 @@
 {
   "song_metadata": {
-    "track_id": "demo-track-001",
-    "title": "Hypothetical 128",
-    "duration_seconds": "180.000",
-    "sample_rate_hz": 44100,
+    "title": "Hypothetical Track 128",
+    "duration_seconds": 120.0,
     "bpm": 128.0,
-    "key": "A minor"
+    "key": "Cm",
+    "time_signature": "4/4"
+  },
+  "stems": {
+    "vocals": "stems/vocals.wav",
+    "drums": "stems/drums.wav",
+    "bass": "stems/bass.wav",
+    "melody": "stems/melody.wav",
+    "other": "stems/other.wav",
+    "master": "mix/master.wav"
   },
   "sections": [
-    {"label": "intro", "start_seconds": "0.000", "end_seconds": "16.000", "confidence": 0.8}
+    {
+      "label": "intro",
+      "instance": 1,
+      "start": 0.0,
+      "end": 15.0,
+      "energy_level": 0.2
+    },
+    {
+      "label": "verse",
+      "instance": 1,
+      "start": 15.0,
+      "end": 45.0,
+      "energy_level": 0.55
+    },
+    {
+      "label": "chorus",
+      "instance": 1,
+      "start": 45.0,
+      "end": 75.0,
+      "energy_level": 0.85
+    }
   ],
   "beat_grid": [
-    {"time_seconds": "0.000", "beat_number": 1, "bar_number": 1}
+    {
+      "time": 0.0,
+      "beat_number": 1,
+      "measure": 1,
+      "strength": "downbeat"
+    },
+    {
+      "time": 0.469,
+      "beat_number": 2,
+      "measure": 1,
+      "strength": "strong"
+    },
+    {
+      "time": 0.938,
+      "beat_number": 3,
+      "measure": 1,
+      "strength": "weak"
+    },
+    {
+      "time": 1.406,
+      "beat_number": 4,
+      "measure": 1,
+      "strength": "off"
+    }
   ],
   "micro_events": [
-    {"event_type": "kick_hit", "time_seconds": "0.000", "significance": "high", "confidence": 0.7}
+    {
+      "time": 14.531,
+      "type": "fill_start",
+      "section": "intro",
+      "significance": "medium",
+      "note": "Drum fill leading into first verse"
+    },
+    {
+      "time": 15.0,
+      "type": "vocal_onset",
+      "section": "verse",
+      "significance": "high",
+      "note": null
+    },
+    {
+      "time": 45.0,
+      "type": "drop",
+      "section": "chorus",
+      "significance": "high",
+      "note": "Full instrumentation enters"
+    }
   ],
   "energy_curve": [
-    {"time_seconds": "0.000", "energy": 0.1}
+    {
+      "time": 0.0,
+      "energy": 0.18
+    },
+    {
+      "time": 30.0,
+      "energy": 0.52
+    },
+    {
+      "time": 60.0,
+      "energy": 0.9
+    },
+    {
+      "time": 90.0,
+      "energy": 0.65
+    }
   ]
 }
