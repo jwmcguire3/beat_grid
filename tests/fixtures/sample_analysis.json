@@ -1,0 +1,73 @@
+{
+  "song_metadata": {
+    "title": "Sample Analysis Song",
+    "duration_seconds": 96.0,
+    "bpm": 128.0,
+    "key": "Am",
+    "time_signature": "4/4"
+  },
+  "stems": {
+    "vocals": "audio/stems/vocals.wav",
+    "drums": "audio/stems/drums.wav",
+    "bass": "audio/stems/bass.wav",
+    "melody": "audio/stems/melody.wav",
+    "other": "audio/stems/other.wav",
+    "master": "audio/master.wav"
+  },
+  "sections": [
+    {
+      "label": "intro",
+      "instance": 1,
+      "start": 0.0,
+      "end": 12.0,
+      "energy_level": 0.25
+    },
+    {
+      "label": "verse",
+      "instance": 1,
+      "start": 12.0,
+      "end": 36.0,
+      "energy_level": 0.5
+    }
+  ],
+  "beat_grid": [
+    {
+      "time": 0.0,
+      "beat_number": 1,
+      "measure": 1,
+      "strength": "downbeat"
+    },
+    {
+      "time": 0.469,
+      "beat_number": 2,
+      "measure": 1,
+      "strength": "strong"
+    }
+  ],
+  "micro_events": [
+    {
+      "time": 11.531,
+      "type": "fill_end",
+      "section": "intro",
+      "significance": "low",
+      "note": "Lead-in ends"
+    },
+    {
+      "time": 12.0,
+      "type": "vocal_onset",
+      "section": "verse",
+      "significance": "high",
+      "note": null
+    }
+  ],
+  "energy_curve": [
+    {
+      "time": 0.0,
+      "energy": 0.2
+    },
+    {
+      "time": 24.0,
+      "energy": 0.58
+    }
+  ]
+}
