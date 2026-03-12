@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "beat_grid_microtiming.schema.json",
+  "title": "Beat Grid & Micro-Timing Output",
+  "type": "object",
+  "required": ["song_metadata", "sections", "beat_grid", "micro_events", "energy_curve"],
+  "properties": {
+    "song_metadata": {"type": "object"},
+    "sections": {"type": "array", "items": {"type": "object"}},
+    "beat_grid": {"type": "array", "items": {"type": "object"}},
+    "micro_events": {"type": "array", "items": {"type": "object"}},
+    "energy_curve": {"type": "array", "items": {"type": "object"}}
+  },
+  "additionalProperties": true
+}
